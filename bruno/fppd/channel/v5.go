@@ -10,26 +10,26 @@ import (
 )
 
 var (
-mutex sync.Mutex // mutex is used to define a critical section of code
-simulation_time int = 0
+mutex1 sync.Mutex // mutex is used to define a critical section of code
+simulation_time1 int = 0
 )
 
 func DoWork(TaskId, iterations int, done chan bool) {
 for i := 1; i <= iterations; i++ {
-mutex.Lock()
-fmt.Printf("%2d:", simulation_time)
-simulation_time++
+mutex1.Lock()
+fmt.Printf("%2d:", simulation_time1)
+simulation_time1++
 for s := 1; s <= TaskId*6; s++ {
 fmt.Printf(" ")
 }
 fmt.Printf("f%d\n", i) // working
 time.Sleep(1 * time.Second)
-mutex.Unlock()
+mutex1.Unlock()
 }
 done <- true
 }
 
-func main() {
+func main1() {
 done := make(chan bool)
 fmt.Println("\n Beginning main goroutine")
 fmt.Println("\n        [T1] [T2] [T3] [T4]\n")
