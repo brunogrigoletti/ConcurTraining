@@ -19,7 +19,7 @@ func main() {
 		var input string //tem que ser string por causa do operador
 		fmt.Scanln(&input)
 
-		cadaDigitoDaConta := strings.Split(input, " ") //eu tentei usar o espaço para dividir, mas não tava rolando
+		cadaDigitoDaConta := strings.Split(input, "") //eu tentei usar o espaço para dividir, mas não tava rolando
 
 		if len(cadaDigitoDaConta) == 3 {
 			//primeira conta
