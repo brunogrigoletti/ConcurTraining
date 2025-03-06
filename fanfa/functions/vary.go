@@ -1,10 +1,10 @@
-package main
+package functions
 
 import (
 	"fmt"
 )
 
-func main() {
+func BestFinishFunc() {
 	bestFinish := championshipFinishes(12, 5, 6, 4, 3, 3)
 
 	fmt.Println(bestFinish)

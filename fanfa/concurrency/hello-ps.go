@@ -1,4 +1,4 @@
-package main
+package concurrency
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func main() {
+func ConcurrencyFunc() {
 	var waitGrp sync.WaitGroup
 	waitGrp.Add(2)
 

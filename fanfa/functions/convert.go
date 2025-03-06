@@ -1,11 +1,11 @@
-package main
+package functions
 
 import (
 	"fmt"
 	"strings"
 )
 
-func main() {
+func Functionsfunc() {
 	author := "thiagão da massa"
 	course := "go basics for dummies"
 

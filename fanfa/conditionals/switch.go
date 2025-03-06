@@ -1,10 +1,10 @@
-package main
+package conditionals
 
 import (
 	"fmt"
 )
 
-func main() {
+func ExercicioSwitch() {
 	name := "Thiago"
 
 	switch name {

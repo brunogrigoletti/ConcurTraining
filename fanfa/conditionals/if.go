@@ -1,10 +1,10 @@
-package main
+package conditionals
 
 import (
 	"fmt"
 )
 
-func main() {
+func ExercicioIf() {
 	//pesoThiago := 95
 	//pesoMaeTiano := 300
 
