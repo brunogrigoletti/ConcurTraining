@@ -13,25 +13,23 @@ func main() {
 
 	fmt.Println("Insira um número de cada vez.")
 	fmt.Println("Você pode continuar fazendo operações no resultado.")
-	fmt.Println("Para sair, digite: DEU!")
+
+	fmt.Println("Insira o primeiro número: ")
+	_, err := fmt.Scan(&num1)
+	if err != nil {
+		fmt.Println("Insira um número válido!")
+	}
 
 	for {
-		fmt.Println("Insira o primeiro número: ")
-		_, err := fmt.Scan(&num1)
-		if err != nil {
-			fmt.Println("Insira um número válido!")
-			continue
-		}
+		fmt.Println("Insira o operador: ")
+		fmt.Scan(&operador)
 
-		fmt.Println("Insira o segundo número: ")
+		fmt.Println("Insira o próximo número: ")
 		_, err = fmt.Scan(&num2)
 		if err != nil {
 			fmt.Println("Insira um número válido!")
 			continue
 		}
-
-		fmt.Println("Insira o operador: ")
-		fmt.Scan(&operador)
 
 		switch operador {
 		case "+":
@@ -45,16 +43,17 @@ func main() {
 		default:
 			fmt.Println("Operação Inválida. Tente novamente.")
 		}
-		fmt.Printf("O resultado é: %d ", resultado)
+		fmt.Printf("O resultado é: %d \n", resultado)
 
 		fmt.Println("Continuar o cálculo usando o resultado? (y/n)")
 		var continua string
+		fmt.Scan(&continua)
 		if continua == "y" || continua == "Y" {
 			num1 = resultado
 		} else {
 			break
 		}
 	}
-	fmt.Printf("O resultado final é: %d", resultado)
+	fmt.Printf("O resultado final é: %d\n", resultado)
 
 }
