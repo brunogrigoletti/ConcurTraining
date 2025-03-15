@@ -37,6 +37,7 @@ func DeleteClient(c *gin.Context) {
 		if client.ID == id {
 			structs.Clients = append(structs.Clients[:i], structs.Clients[i+1:]...) //Go não tem um método de remoção de elementos de um slice, então é necessário adicionar uma nova slice removendo o elemento desejado
 			c.IndentedJSON(http.StatusOK, gin.H{"message": "Client deleted!"})
+			return
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
