@@ -14,10 +14,14 @@ func main() {
 	fmt.Println("Insira um número de cada vez.")
 	fmt.Println("Você pode continuar fazendo operações no resultado.")
 
-	fmt.Println("Insira o primeiro número: ")
-	_, err := fmt.Scan(&num1)
-	if err != nil {
-		fmt.Println("Insira um número válido!")
+	for {
+		fmt.Println("Insira o primeiro número: ")
+		_, err := fmt.Scan(&num1)
+		if err != nil {
+			fmt.Println("Insira um número válido!")
+		} else {
+			break
+		}
 	}
 
 	for {
@@ -25,7 +29,7 @@ func main() {
 		fmt.Scan(&operador)
 
 		fmt.Println("Insira o próximo número: ")
-		_, err = fmt.Scan(&num2)
+		var _, err = fmt.Scan(&num2)
 		if err != nil {
 			fmt.Println("Insira um número válido!")
 			continue

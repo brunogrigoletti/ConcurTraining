@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"apiClientes/endpoints"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -10,5 +11,6 @@ func main() {
 	router.GET("/clients", endpoints.GetAllUsers)
 	router.GET("/clients/:id", endpoints.GetUserById)
 	router.POST("/newclient", endpoints.PostClient)
+	router.DELETE("/deleteclient/:id", endpoints.DeleteClient)
 	router.Run("localhost:8080")
 }
