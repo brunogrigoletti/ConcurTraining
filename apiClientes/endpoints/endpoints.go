@@ -42,3 +42,23 @@ func DeleteClient(c *gin.Context) {
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
 }
+
+func UpdateClient(c *gin.Context) { //tem que mandar todas as informações do cliente, se não o que não mandar fica vazio
+	id := c.Param("id")
+
+	var updatedClient structs.Client
+	if err := c.BindJSON(&updatedClient); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid request!"})
+		return
+	}
+
+	for i, client := range structs.Clients {
+		if client.ID == id {
+			structs.Clients[i] = updatedClient
+			c.IndentedJSON(http.StatusOK, gin.H{"message": "Client updated!"})
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
+}

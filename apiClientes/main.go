@@ -11,6 +11,7 @@ func main() {
 	router.GET("/clients", endpoints.GetAllUsers)
 	router.GET("/clients/:id", endpoints.GetUserById)
 	router.POST("/newclient", endpoints.PostClient)
+	router.PUT("/updateclient/:id", endpoints.UpdateClient)
 	router.DELETE("/deleteclient/:id", endpoints.DeleteClient)
 	router.Run("localhost:8080")
 }
