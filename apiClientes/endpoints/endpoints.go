@@ -1,10 +1,12 @@
 package endpoints
 
 import (
+	"database/sql"
+	"log"
 	"apiClientes/structs"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 func GetAllUsers(c *gin.Context) {
@@ -22,12 +24,24 @@ func GetUserById(c *gin.Context) {
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
 }
 
-func PostClient(c *gin.Context) {
+func PostClient(db *sql.DB) {
 	var newClient structs.Client
 	if err := c.BindJSON(&newClient); err != nil {
 		return
 	}
-	structs.Clients = append(structs.Clients, newClient)
+
+	stmt, err := db.Prepare("INSERT INTO clients (id, name, birthdate, email) VALUES ('9','Rafael Godoy','10-10-1991','rafael.godoy@sap.com')")
+	if err != nil {
+	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(produto.Nome)
+	if err != nil {
+	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	return
+	}
+	//structs.Clients = append(structs.Clients, newClient)
 	c.IndentedJSON(http.StatusCreated, newClient)
 }
 

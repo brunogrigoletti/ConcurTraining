@@ -2,7 +2,10 @@ module apiClientes
 
 go 1.22.1
 
-require github.com/gin-gonic/gin v1.10.0
+require (
+	github.com/gin-gonic/gin v1.10.0
+	github.com/lib/pq v1.10.9
+)
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect
