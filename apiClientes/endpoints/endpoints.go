@@ -2,18 +2,39 @@ package endpoints
 
 import (
 	"database/sql"
-	"log"
+	//"log"
 	"apiClientes/structs"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
-func GetAllUsers(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, structs.Clients)
+func GetAllUsers(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		rows, err := db.Query("SELECT * FROM clients")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		defer rows.Close()
+
+		var clients []structs.Client
+		for rows.Next() {
+			var client structs.Client
+			err := rows.Scan(&client.ID, &client.Name)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			clients = append(clients, client)
+		}
+		c.JSON(http.StatusOK, clients)
+		//c.IndentedJSON(http.StatusOK, structs.Clients)
+	}
 }
 
-func GetUserById(c *gin.Context) {
+/* func GetUserById(c *gin.Context) {
 	id := c.Param("id")
 	for _, client := range structs.Clients {
 		if client.ID == id {
@@ -22,30 +43,34 @@ func GetUserById(c *gin.Context) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
+} */
+
+func PostClient(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		var newClient structs.Client
+		if err := c.BindJSON(&newClient); err != nil {
+			return
+		}
+
+		stmt, err := db.Prepare("INSERT INTO clients (id, name, birthdate, email) VALUES (9, Rafael Godoy, 10-10-1991, rafael.godoy@sap.com)")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		defer stmt.Close()
+
+		_, err = stmt.Exec(newClient.Name)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		//structs.Clients = append(structs.Clients, newClient)
+		c.IndentedJSON(http.StatusCreated, newClient)
+	}
 }
 
-func PostClient(db *sql.DB) {
-	var newClient structs.Client
-	if err := c.BindJSON(&newClient); err != nil {
-		return
-	}
-
-	stmt, err := db.Prepare("INSERT INTO clients (id, name, birthdate, email) VALUES ('9','Rafael Godoy','10-10-1991','rafael.godoy@sap.com')")
-	if err != nil {
-	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	return
-	}
-	defer stmt.Close()
-	_, err = stmt.Exec(produto.Nome)
-	if err != nil {
-	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	return
-	}
-	//structs.Clients = append(structs.Clients, newClient)
-	c.IndentedJSON(http.StatusCreated, newClient)
-}
-
-func DeleteClient(c *gin.Context) {
+/* func DeleteClient(c *gin.Context) {
 	id := c.Param("id")
 	for i, client := range structs.Clients {
 		if client.ID == id {
@@ -55,9 +80,9 @@ func DeleteClient(c *gin.Context) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
-}
+} */
 
-func UpdateClient(c *gin.Context) { //tem que mandar todas as informações do cliente, se não o que não mandar fica vazio
+/* func UpdateClient(c *gin.Context) { //tem que mandar todas as informações do cliente, se não o que não mandar fica vazio
 	id := c.Param("id")
 
 	var updatedClient structs.Client
@@ -75,4 +100,4 @@ func UpdateClient(c *gin.Context) { //tem que mandar todas as informações do c
 	}
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
-}
+} */
