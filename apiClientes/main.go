@@ -19,7 +19,7 @@ func main() {
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS clients
 		(
 			id SERIAL PRIMARY KEY,
-			nome VARCHAR(255) NOT NULL,
+			name VARCHAR(255) NOT NULL,
 			birthdate VARCHAR(255) NOT NULL,
 			email VARCHAR(255) NOT NULL
 		)`)
@@ -29,7 +29,7 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/clients", endpoints.GetAllUsers(db))
-	//router.GET("/clients/:id", endpoints.GetUserById)
+	router.GET("/clients/:id", endpoints.GetUserById(db))
 	router.POST("/newclient", endpoints.PostClient(db))
 	//router.PUT("/updateclient/:id", endpoints.UpdateClient)
 	//router.DELETE("/deleteclient/:id", endpoints.DeleteClient)
