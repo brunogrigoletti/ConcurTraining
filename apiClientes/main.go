@@ -31,7 +31,7 @@ func main() {
 	router.GET("/clients", endpoints.GetAllUsers(db))
 	router.GET("/clients/:id", endpoints.GetUserById(db))
 	router.POST("/newclient", endpoints.PostClient(db))
-	//router.PUT("/updateclient/:id", endpoints.UpdateClient)
-	//router.DELETE("/deleteclient/:id", endpoints.DeleteClient)
+	router.PUT("/updateclient/:id", endpoints.UpdateClient(db))
+	router.DELETE("/deleteclient/:id", endpoints.DeleteClient(db))
 	router.Run("localhost:8080")
 }

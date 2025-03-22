@@ -1,9 +1,10 @@
 package endpoints
 
 import (
-	"database/sql"
 	"apiClientes/structs"
+	"database/sql"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -74,34 +75,59 @@ func PostClient(db *sql.DB) gin.HandlerFunc {
 	}
 }
 
-/* func DeleteClient(c *gin.Context) {
-	id := c.Param("id")
-	for i, client := range structs.Clients {
-		if client.ID == id {
-			structs.Clients = append(structs.Clients[:i], structs.Clients[i+1:]...) //Go não tem um método de remoção de elementos de um slice, então é necessário adicionar uma nova slice removendo o elemento desejado
-			c.IndentedJSON(http.StatusOK, gin.H{"message": "Client deleted!"})
+func DeleteClient(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+
+		result, err := db.Exec("DELETE FROM clients WHERE id = $1", id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
-} */
 
-/* func UpdateClient(c *gin.Context) { //tem que mandar todas as informações do cliente, se não o que não mandar fica vazio
-	id := c.Param("id")
-
-	var updatedClient structs.Client
-	if err := c.BindJSON(&updatedClient); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid request!"})
-		return
-	}
-
-	for i, client := range structs.Clients {
-		if client.ID == id {
-			structs.Clients[i] = updatedClient
-			c.IndentedJSON(http.StatusOK, gin.H{"message": "Client updated!"})
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Client not found!"})
-} */
+		if rowsAffected == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"message": "Client not found"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Client deleted"})
+	}
+}
+
+func UpdateClient(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+
+		var updatedClient structs.Client
+		if err := c.BindJSON(&updatedClient); err != nil {
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid request!"})
+			return
+		}
+
+		result, err := db.Exec("UPDATE clients SET name = $1, birthdate = $2, email = $3 WHERE id = $4",
+			updatedClient.Name, updatedClient.Birthdate, updatedClient.Email, id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		if rowsAffected == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"message": "Client not found"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Client updated"})
+	}
+}
