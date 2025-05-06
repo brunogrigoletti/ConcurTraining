@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drop-down Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+    }
+    select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Drop-down Example</h1>
+    <select id="dropdown1"></select>
+    <br>
+    <select id="dropdown2"></select>
+    <br>
+    <button onclick="handleClick()">Submit</button>
+  </div>
+
+  <script>
+    // Função para buscar a lista de Pokémon e preencher os drop-downs
+    async function fetchPokemon() {
+      try {
+        const response = await fetch('/pokemon'); // Faz uma requisição ao endpoint
+        const pokemonList = await response.json(); // Converte a resposta para JSON
+
+        const dropdown1 = document.getElementById('dropdown1');
+        const dropdown2 = document.getElementById('dropdown2');
+
+        // Preenche os drop-downs com a lista de Pokémon
+        pokemonList.forEach(pokemon => {
+          const option1 = document.createElement('option');
+          option1.value = pokemon;
+          option1.textContent = pokemon;
+          dropdown1.appendChild(option1);
+
+          const option2 = document.createElement('option');
+          option2.value = pokemon;
+          option2.textContent = pokemon;
+          dropdown2.appendChild(option2);
+        });
+      } catch (error) {
+        console.error('Error fetching Pokémon list:', error);
+      }
+    }
+
+    // Chama a função para buscar os Pokémon ao carregar a página
+    fetchPokemon();
+
+    function handleClick() {
+      const dropdown1 = document.getElementById('dropdown1').value;
+      const dropdown2 = document.getElementById('dropdown2').value;
+      alert(`Selected values:\nDropdown 1: ${dropdown1}\nDropdown 2: ${dropdown2}`);
+    }
+  </script>
+</body>
+</html>
