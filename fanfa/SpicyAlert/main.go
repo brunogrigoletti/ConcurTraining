@@ -49,7 +49,7 @@ func sendEmail() {
 	smtpPort := "587"
 
 	//Message
-	message := []byte("Subject: !!!SpicyAlert!!! - Customer Love Engineer is Open!\r\n\r\nThe 'Customer Love Engineer' role is now open at Chili Piper. Go apply now!\r\nhttps://www.chilipiper.com/careers#work")
+	message := []byte("Subject: !!!SpicyAlert!!! - Customer Love Engineer is Open!\r\n\r\nThe 'Customer Love Engineer' role is now open at Chili Piper. Go apply now!\r\nhttps://www.chilipiper.com/careers#work \r\n\r\nNão esquece de apagar a App-Specific Password do código pra não te hackearem no futuro!!!")
 
 	//Authentication
 	auth := smtp.PlainAuth("", from, password, smtpHost)
