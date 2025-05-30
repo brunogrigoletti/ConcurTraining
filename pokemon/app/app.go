@@ -59,7 +59,7 @@ firstPokemonSelected:
 	for {
 		fmt.Print("Second Pokémon: ")
 		fmt.Scanln(&p2)
-		if data.ValidatePokemon(p1) {
+		if data.ValidatePokemon(p2) {
 			fmt.Print(p2 + "'s abilities:\n")
 			moves := data.GetMoves(p2)
 			for move, power := range moves {
