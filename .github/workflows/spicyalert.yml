@@ -19,6 +19,8 @@ jobs:
           go-version: '1.21'  # Use the latest stable version
 
       - name: Run SpicyAlert
-        run: go run main.go
+        run: go run fanfa/SpicyAlert/main.go
+
+
 
 
