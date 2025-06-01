@@ -10,13 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Go
+      - name: Set up Go environment
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'  # Use the latest stable version
+          go-version: '1.21'
+
+      - name: Install dependencies (if any)
+        run: go mod tidy
 
       - name: Run SpicyAlert
         run: go run main.go
