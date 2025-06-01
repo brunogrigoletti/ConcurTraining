@@ -29,7 +29,7 @@ func main() {
 	content := string(body)
 
 	// Check if the job title exists in the page content
-	if strings.Contains(content, "Customer Success Manager") {
+	if strings.Contains(content, "Customer Love Engineer") {
 		fmt.Println("FOUND IT! GO APPLY!")
 		//Send email alert
 		sendEmail()
