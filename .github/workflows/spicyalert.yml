@@ -10,20 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Go environment
+      - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'
-
-      - name: Initialize Go module
-        run: go mod init github.com/brunogrigoletti/ConcurTraining
-        if: "!exists('go.mod')" # Only runs if go.mod doesn't exist
-
-      - name: Install dependencies (if any)
-        run: go mod tidy
+          go-version: '1.21'  # Use the latest stable version
 
       - name: Run SpicyAlert
         run: go run main.go
+
+
