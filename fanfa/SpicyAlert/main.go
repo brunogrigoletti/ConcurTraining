@@ -43,7 +43,7 @@ func main() {
 func sendEmail() {
 	//Sender Data
 	from := "fanfathi95@gmail.com"
-	password := os.Getenv("TELEGRAM_TOKEN")
+	password := os.Getenv("EMAIL_PASSWORD")
 
 	//Receiver email address
 	to := "fanfathi95@gmail.com"
