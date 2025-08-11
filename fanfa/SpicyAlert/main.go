@@ -43,7 +43,7 @@ func main() {
 func sendEmail() {
 	//Sender Data
 	from := "fanfathi95@gmail.com"
-	password := "rvuu tkfk edyu oems"
+	password := os.Getenv("TELEGRAM_TOKEN")
 
 	//Receiver email address
 	to := "fanfathi95@gmail.com"
@@ -99,7 +99,7 @@ func sendPushNotification() {
 }
 
 func sendTelegramNotification() {
-	botToken := "7919134966:AAENnDo0LN7n2hCZ_BS53acQEp22YTUIitQ"
+	botToken := os.Getenv("TELEGRAM_TOKEN")
 	chatID := "1001092787"
 	message := "The 'Customer Love Engineer' role is now open at Chili Piper. Go apply now!\r\nhttps://www.chilipiper.com/careers#work"
 

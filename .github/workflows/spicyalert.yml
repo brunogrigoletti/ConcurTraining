@@ -1,13 +1,14 @@
-name: SpicyAlert Checker
+name: SpicyAlert
 
 on:
   schedule:
     - cron: '0 * * * *'   # Runs at the top of every hour (UTC)
-  workflow_dispatch:       # Allows manual run from GitHub UI
+  workflow_dispatch:
 
 jobs:
   run-spicyalert:
     runs-on: ubuntu-latest
+    environment: Spicy
 
     steps:
       - name: Checkout code
@@ -16,11 +17,10 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'  # Use the latest stable version
+          go-version: '1.21'
 
       - name: Run SpicyAlert
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: go run fanfa/SpicyAlert/main.go
-
-
-
-
